@@ -115,7 +115,7 @@ public class Cribbage extends CardGame {
   private final int handWidth = 400;
   private final int cribWidth = 150;
   private final int segmentWidth = 180;
-  private static final Deck deck = new Deck(Suit.values(), Rank.values(), "cover", new MyCardValues());
+  public static final Deck deck = new Deck(Suit.values(), Rank.values(), "cover", new MyCardValues());
   private final Location[] handLocations = {
 			  new Location(360, 75),
 			  new Location(360, 625)
@@ -158,6 +158,7 @@ private void initScore() {
 
 private void updateScore(int player) {
 	removeActor(scoreActors[player]);
+	scores[player] = players[player].getScore();
 	scoreActors[player] = new TextActor(String.valueOf(scores[player]), Color.WHITE, bgColor, bigFont);
 	addActor(scoreActors[player], scoreLocations[player]);
 }
@@ -318,6 +319,8 @@ private void play() {
 		scoringStrategy.setCurrentPlayer(players[s.lastPlayer]);
 		scoringStrategy.getScore();
 
+		updateScore(s.lastPlayer);
+
 		if (s.newSegment) {
 			segments.add(s.segment);
 			s.reset(segments);
@@ -365,6 +368,9 @@ void showHandsCrib() {
 	scoringStrategy.setCurrentPlayer(players[crib_segment.lastPlayer]);
 
 	scoringStrategy.getScore();
+
+	updateScore(1);
+	updateScore(0);
 
 }
 

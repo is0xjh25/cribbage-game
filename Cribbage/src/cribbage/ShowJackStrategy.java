@@ -13,7 +13,8 @@ public class ShowJackStrategy extends ScoringStrategy {
         ArrayList<Card> cardList = tempSegment.segment.getCardList();
 
         for (int i = 0; i < cardList.size() - 1; i++) {
-            if (cardList.get(i).getRankId() == 11 && cardList.get(i).getSuitId() == cardList.get(-1).getSuitId()) {
+            Cribbage.Rank rank = (Cribbage.Rank) cardList.get(i).getRank();
+            if (rank.order == 11 && cardList.get(i).getSuitId() == cardList.get(cardList.size() - 1).getSuitId()) {
                 currentPlayer.setScore(currentPlayer.getScore() + 1);
                 String log = String.format("score,P%d,%d,%d,jack,[%s]", segmentScoring.lastPlayer, currentPlayer.getScore(), 1, Cribbage.canonical(cardList.get(i)));
                 logger.log(log);

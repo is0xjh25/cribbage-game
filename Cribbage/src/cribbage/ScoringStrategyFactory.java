@@ -33,6 +33,7 @@ public class ScoringStrategyFactory {
                 compositeStrategy = new CompositeShowStrategy();
 
                 // the order is matter here
+                compositeStrategy.addStrategy(new ShowFifteenStrategy());
                 compositeStrategy.addStrategy(new ShowFlushStrategy());
                 compositeStrategy.addStrategy(new ShowJackStrategy());
                 compositeStrategy.addStrategy(new ShowPairStrategy());

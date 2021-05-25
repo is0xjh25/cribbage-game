@@ -46,7 +46,6 @@ public class ShowRunStrategy extends ScoringStrategy{
             }
             return tot_score;
         }
-
         return tot_score;
     }
 }
