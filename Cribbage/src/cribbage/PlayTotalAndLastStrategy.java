@@ -17,7 +17,10 @@ public class PlayTotalAndLastStrategy extends ScoringStrategy{
             score += 2;
             logMessage = String.format("score,P%d,%d,%d,fifteen",tempSegment.lastPlayer, currentPlayer.getScore(), score);
             logger.log(logMessage);
-        } else if (tempSegment.go == true && tempSegment.newSegment == true) {
+        }
+
+        if (tempSegment.go == true && tempSegment.nonCard == true) {
+            System.out.println("tttt\n\n");
             currentPlayer.setScore(currentPlayer.getScore() + 1);
             score += 1;
             logMessage = String.format("score,P%d,%d,%d,go",tempSegment.lastPlayer, currentPlayer.getScore(), score);

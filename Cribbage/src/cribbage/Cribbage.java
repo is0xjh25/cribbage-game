@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -246,6 +247,7 @@ class Segment {
 		boolean go;
 		int lastPlayer;
 		boolean newSegment;
+		boolean nonCard;
 
 		void reset(final List<Hand> segments) {
 			segment = new Hand(deck);
@@ -254,6 +256,7 @@ class Segment {
 			go = false;        // No-one has said "go" yet
 			lastPlayer = -1;   // No-one has played a card yet in this segment
 			newSegment = false;  // Not ready for new segment yet
+			nonCard = false;
 		}
 
 		Segment copySegment() {
@@ -273,6 +276,7 @@ class Segment {
 
 private void play() {
 	final int thirtyone = 31;
+	final int fifteen = 15;
 	List<Hand> segments = new ArrayList<>();
 	int currentPlayer = 0; // Player 1 is dealer
 	Segment s = new Segment();
@@ -284,7 +288,11 @@ private void play() {
 			if (s.go) {
 				// Another "go" after previous one with no intervening cards
 				// lastPlayer gets 1 point for a "go"
-
+				IPlayer player = players[s.lastPlayer];
+				player.setScore(player.getScore() + 1);
+				String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
+				logger.log(logMessage);
+				s.nonCard = true;
 				s.newSegment = true;
 			} else {
 				// currentPlayer says "go"
@@ -298,9 +306,19 @@ private void play() {
 			logger.log(playLog);
 			if (total(s.segment) == thirtyone) {
 				// lastPlayer gets 2 points for a 31
+				IPlayer player = players[s.lastPlayer];
+				player.setScore(player.getScore() + 2);
+				String logMessage = String.format("score,P%d,%d,%d,thirtyone",s.lastPlayer, player.getScore(), 2);
+				logger.log(logMessage);
 				s.newSegment = true;
 				currentPlayer = (currentPlayer+1) % 2;
 			} else {
+				if (total(s.segment) == fifteen) {
+					IPlayer player = players[s.lastPlayer];
+					player.setScore(player.getScore() + 2);
+					String logMessage = String.format("score,P%d,%d,%d,fifteen",s.lastPlayer, player.getScore(), 2);
+					logger.log(logMessage);
+				}
 				// if total(segment) == 15, lastPlayer gets 2 points for a 15
 				if (!s.go) { // if it is "go" then same player gets another turn
 					currentPlayer = (currentPlayer+1) % 2;
@@ -309,17 +327,20 @@ private void play() {
 		}
 
 		if (players[0].emptyHand() && players[1].emptyHand()) {
-			s.go = true;
-			s.newSegment = true;
+			IPlayer player = players[s.lastPlayer];
+			player.setScore(player.getScore() + 1);
+			String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
+			logger.log(logMessage);
 		}
 
+		if (s.lastPlayer != -1 && nextCard != null) {
+			ScoringStrategy scoringStrategy = ScoringStrategyFactory.getInstance().getScoringStrategy(StrategyType.PLAY);
+			scoringStrategy.setSegment(s);
+			scoringStrategy.setCurrentPlayer(players[s.lastPlayer]);
+			scoringStrategy.getScore();
+			updateScore(s.lastPlayer);
+		}
 
-		ScoringStrategy scoringStrategy = ScoringStrategyFactory.getInstance().getScoringStrategy(StrategyType.PLAY);
-		scoringStrategy.setSegment(s);
-		scoringStrategy.setCurrentPlayer(players[s.lastPlayer]);
-		scoringStrategy.getScore();
-
-		updateScore(s.lastPlayer);
 
 		if (s.newSegment) {
 			segments.add(s.segment);

@@ -25,8 +25,9 @@ public class ShowFlushStrategy extends ScoringStrategy{
                 score += 4;
                 currentPlayer.setScore(currentPlayer.getScore() + 4);
                 flushSuit = suit;
+                break;
             }
-            break;
+
         }
 
         if (score == 4) {
@@ -36,7 +37,7 @@ public class ShowFlushStrategy extends ScoringStrategy{
                 score += 1;
                 currentPlayer.setScore(currentPlayer.getScore() + 1);
             } else {
-                tempSegment.segment.getLast();
+                tempSegment.segment.removeLast(false);
             }
         }
 

@@ -25,19 +25,19 @@ public class ScoringStrategyFactory {
                 compositeStrategy = new CompositePlayStrategy();
 
                 //  the order is matter here
-                compositeStrategy.addStrategy(new PlayPairStrategy());
+                // compositeStrategy.addStrategy(new PlayTotalAndLastStrategy());
                 compositeStrategy.addStrategy(new PlayRunStrategy());
-                compositeStrategy.addStrategy(new PlayTotalAndLastStrategy());
+                compositeStrategy.addStrategy(new PlayPairStrategy());
                 break;
             case SHOW:
                 compositeStrategy = new CompositeShowStrategy();
 
                 // the order is matter here
                 compositeStrategy.addStrategy(new ShowFifteenStrategy());
+                compositeStrategy.addStrategy(new ShowRunStrategy());
+                compositeStrategy.addStrategy(new ShowPairStrategy());
                 compositeStrategy.addStrategy(new ShowFlushStrategy());
                 compositeStrategy.addStrategy(new ShowJackStrategy());
-                compositeStrategy.addStrategy(new ShowPairStrategy());
-                compositeStrategy.addStrategy(new ShowRunStrategy());
                 break;
         }
 

@@ -27,6 +27,7 @@ public class ShowFifteenStrategy extends ScoringStrategy{
                 score+=2;
                 currentPlayer.setScore(currentPlayer.getScore()+2);
                 String log = String.format("score,p%d,%d,%d,fifteen,%s",segmentScoring.lastPlayer,currentPlayer.getScore(),2,Cribbage.canonical(hand));
+
                 logger.log(log);
             }
         }
