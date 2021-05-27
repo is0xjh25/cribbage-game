@@ -12,7 +12,7 @@ public class PlayRunStrategy extends ScoringStrategy{
 
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         int runNum = -1;
-
+        Cribbage.ScoreType scoreType = null;
         while (tempSegment.segment.getNumberOfCards() > 2) {
             if (tempSegment.segment.getNumberOfCards() == 7) {
                 Hand[] temp = tempSegment.segment.extractSequences(7);
@@ -20,6 +20,7 @@ public class PlayRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 7);
                     score += 7;
                     runNum = 7;
+                    scoreType = Cribbage.ScoreType.RUN7;
                     break;
                 }
             } else if (tempSegment.segment.getNumberOfCards() == 6) {
@@ -28,6 +29,7 @@ public class PlayRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 6);
                     score += 6;
                     runNum = 6;
+                    scoreType = Cribbage.ScoreType.RUN6;
                     break;
                 }
             } else if (tempSegment.segment.getNumberOfCards() == 5) {
@@ -36,6 +38,7 @@ public class PlayRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 5);
                     score += 5;
                     runNum = 5;
+                    scoreType = Cribbage.ScoreType.RUN5;
                     break;
                 }
             } else if (tempSegment.segment.getNumberOfCards() == 4) {
@@ -44,6 +47,7 @@ public class PlayRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 4);
                     score += 4;
                     runNum = 4;
+                    scoreType = Cribbage.ScoreType.RUN4;
                     break;
                 }
             } else if (tempSegment.segment.getNumberOfCards() == 3) {
@@ -52,15 +56,18 @@ public class PlayRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 3);
                     score += 3;
                     runNum = 3;
+                    scoreType = Cribbage.ScoreType.RUN3;
                     break;
                 }
             }
             tempSegment.segment.removeFirst(false);
         }
 
-        if (runNum != -1) {
-            String pairLog = String.format("score,P%d,%d,%d,run%d",tempSegment.lastPlayer, currentPlayer.getScore(), score, runNum);
-            logger.log(pairLog);
+        if (runNum != -1 && scoreType != null) {
+//            String pairLog = String.format("score,P%d,%d,%d,run%d",tempSegment.lastPlayer, currentPlayer.getScore(), score, runNum);
+//            logger.log(pairLog);
+
+            loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, scoreType);
         }
 
         return score;

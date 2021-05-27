@@ -16,8 +16,11 @@ public class ShowJackStrategy extends ScoringStrategy {
             Cribbage.Rank rank = (Cribbage.Rank) cardList.get(i).getRank();
             if (rank.order == 11 && cardList.get(i).getSuitId() == cardList.get(cardList.size() - 1).getSuitId()) {
                 currentPlayer.setScore(currentPlayer.getScore() + 1);
-                String log = String.format("score,P%d,%d,%d,jack,[%s]", segmentScoring.lastPlayer, currentPlayer.getScore(), 1, Cribbage.canonical(cardList.get(i)));
-                logger.log(log);
+//                String log = String.format("score,P%d,%d,%d,jack,[%s]", segmentScoring.lastPlayer, currentPlayer.getScore(), 1, Cribbage.canonical(cardList.get(i)));
+//                logger.log(log);
+                loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.JACK, Cribbage.canonical(cardList.get(i)));
+
+                // ServiceFactory.getLoggerHelper()
                 score = 1;
                 break;
             }
@@ -25,3 +28,6 @@ public class ShowJackStrategy extends ScoringStrategy {
         return score;
     }
 }
+//ServiceFactory:
+//private Lo str;
+//private LoggerHelper log;

@@ -2,7 +2,7 @@ package cribbage;
 
 public abstract class ScoringStrategy {
 
-    protected Logger logger = Logger.getInstance();
+    protected LoggerHelper loggerHelper = LoggerHelper.getInstance();
 
     protected Cribbage.Segment segmentScoring;
 

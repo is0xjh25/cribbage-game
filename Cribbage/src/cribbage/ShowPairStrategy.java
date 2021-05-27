@@ -28,8 +28,9 @@ public class ShowPairStrategy extends ScoringStrategy {
 
             // print to log
             // score,P1,7,2,pair2,[AD,AH]
-            String log = String.format("score,P%d,%d,%d,pair%d,%s", tempSegment.lastPlayer, currentPlayer.getScore(), score, flag, quad.toString());
-            logger.log(log);
+//            String log = String.format("score,P%d,%d,%d,pair%d,%s", tempSegment.lastPlayer, currentPlayer.getScore(), score, flag, quad.toString());
+//            logger.log(log);
+            loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.PAIR4, Cribbage.canonical(quad[0]));
             return score;
         }
 
@@ -44,8 +45,9 @@ public class ShowPairStrategy extends ScoringStrategy {
 
             // print to log
             // score,P1,7,2,pair2,[AD,AH]
-            String log = String.format("score,P%d,%d,%d,pair%d,%s", tempSegment.lastPlayer, currentPlayer.getScore(), score, flag, Cribbage.canonical(trip[0]));
-            logger.log(log);
+//            String log = String.format("score,P%d,%d,%d,pair%d,%s", tempSegment.lastPlayer, currentPlayer.getScore(), score, flag, Cribbage.canonical(trip[0]));
+//            logger.log(log);
+            loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.PAIR3, Cribbage.canonical(trip[0]));
 
 //            int rank = trip[0].getFirst().getRankId();
 //            for (int i = 0; i < cardList.size() - 1; i++) {
@@ -88,8 +90,9 @@ public class ShowPairStrategy extends ScoringStrategy {
 
                 // print to log
                 // score,P1,7,2,pair2,[AD,AH]
-                String log = String.format("score,P%d,%d,%d,pair%d,%s", tempSegment.lastPlayer, currentPlayer.getScore(), score, flag, Cribbage.canonical(pair[i]));
-                logger.log(log);
+//                String log = String.format("score,P%d,%d,%d,pair%d,%s", tempSegment.lastPlayer, currentPlayer.getScore(), score, flag, Cribbage.canonical(pair[i]));
+//                logger.log(log);
+                loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.PAIR2, Cribbage.canonical(pair[i]));
             }
         }
 

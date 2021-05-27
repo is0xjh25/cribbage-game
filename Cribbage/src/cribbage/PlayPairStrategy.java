@@ -11,7 +11,7 @@ public class PlayPairStrategy extends ScoringStrategy{
         int flag = -1;
 
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
-
+        Cribbage.ScoreType scoreType = null;
 
         while (tempSegment.segment.getNumberOfCards() > 1) {
             if (tempSegment.segment.getNumberOfCards() == 4) {
@@ -20,6 +20,7 @@ public class PlayPairStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 12);
                     score += 12;
                     flag = 4;
+                    scoreType = Cribbage.ScoreType.PAIR4;
                     break;
                 }
             } else if (tempSegment.segment.getNumberOfCards() == 3) {
@@ -28,6 +29,7 @@ public class PlayPairStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 6);
                     score += 6;
                     flag = 3;
+                    scoreType = Cribbage.ScoreType.PAIR3;
                     break;
                 }
             } else if (tempSegment.segment.getNumberOfCards() == 2) {
@@ -37,15 +39,18 @@ public class PlayPairStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 2);
                     score += 2;
                     flag = 2;
+                    scoreType = Cribbage.ScoreType.PAIR2;
                     break;
                 }
             }
             tempSegment.segment.removeFirst(false);
         }
 
-        if (flag != -1) {
-            String pairLog = String.format("score,P%d,%d,%d,pair%d",tempSegment.lastPlayer, currentPlayer.getScore(), score, flag);
-            logger.log(pairLog);
+        if (flag != -1 && scoreType != null) {
+            // String pairLog = String.format("score,P%d,%d,%d,pair%d",tempSegment.lastPlayer, currentPlayer.getScore(), score, flag);
+            //String logMes = getLogMessage(xxxxxxxxxx)
+//            logger.log(pairLog);
+            loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, scoreType);
         }
 
         return score;

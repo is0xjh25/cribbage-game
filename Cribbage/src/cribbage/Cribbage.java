@@ -19,7 +19,9 @@ import java.util.stream.Stream;
 public class Cribbage extends CardGame {
 	static Cribbage cribbage;  // Provide access to singleton
 
-	static Logger logger;
+//	static Logger logger;
+
+	static LoggerHelper loggerHelper;
 
 	public enum Suit {
 		CLUBS, DIAMONDS, HEARTS, SPADES
@@ -37,6 +39,18 @@ public class Cribbage extends CardGame {
 		Rank(int order, int value) {
 			this.order = order;
 			this.value = value;
+		}
+	}
+
+	public enum ScoreType {
+		// Order of cards is tied to card images
+		// ACE(1,1), KING(13,10), QUEEN(12,10), JACK(11,10), TEN(10,10), NINE(9,9), EIGHT(8,8), SEVEN(7,7), SIX(6,6), FIVE(5,5), FOUR(4,4), THREE(3,3), TWO(2,2);
+
+		FIFTEEN("fifteen"), THIRTYONE("thirtyone"), GO("go"), RUN3("run3"), RUN4("run4"), RUN5("run5"), RUN6("run6"), RUN7("run7"), PAIR2("pair2"), PAIR3("pair3"), PAIR4("pair4"),
+		FLUSH4("flush4"), FLUSH5("flush5"), JACK("jack");
+		public final String scoreType;
+		ScoreType(String scoreType) {
+			this.scoreType = scoreType;
 		}
 	}
 
@@ -185,8 +199,10 @@ private void deal(Hand pack, Hand[] hands) {
 	dealingOut(pack, hands);
 	for (int i = 0; i < nPlayers; i++) {
 		hands[i].sort(Hand.SortType.POINTPRIORITY, true);
-		String dealLog = String.format("deal,P%d,%s", i, canonical(hands[i]));
-		logger.log(dealLog);
+//		String dealLog = String.format("deal,P%d,%s", i, canonical(hands[i]));
+//		logger.log(dealLog);
+		loggerHelper.logDeal(hands[i], i);
+
 	}
 	layouts[0].setStepDelay(0);
 }
@@ -208,8 +224,9 @@ private void discardToCrib() {
 			hand.insert(recordDiscard, false);
 		}
 
-		String discardLog = String.format("discard,p%d,%s", j, canonical(hand));
-		logger.log(discardLog);
+//		String discardLog = String.format("discard,p%d,%s", j, canonical(hand));
+//		logger.log(discardLog);
+		loggerHelper.logDiscard(hand, j);
 
 		crib.sort(Hand.SortType.POINTPRIORITY, true);
 	}
@@ -232,8 +249,9 @@ private void starter(Hand pack) {
 	Card dealt = randomCard(pack);
 	dealt.setVerso(false);
 	transfer(dealt, starter);
-	String starterLog = String.format("Starter,%s", canonical(dealt));
-	logger.log(starterLog);
+//	String starterLog = String.format("Starter,%s", canonical(dealt));
+//	logger.log(starterLog);
+	loggerHelper.loggerStarter(dealt);
 }
 
 public static int total(Hand hand) {
@@ -290,8 +308,10 @@ private void play() {
 				// lastPlayer gets 1 point for a "go"
 				IPlayer player = players[s.lastPlayer];
 				player.setScore(player.getScore() + 1);
-				String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
-				logger.log(logMessage);
+//				String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
+//				logger.log(logMessage);
+				loggerHelper.logScore(s,player.getScore(),1,ScoreType.GO);
+
 				s.nonCard = true;
 				s.newSegment = true;
 			} else {
@@ -302,22 +322,26 @@ private void play() {
 		} else {
 			s.lastPlayer = currentPlayer; // last Player to play a card in this segment
 			transfer(nextCard, s.segment);
-			String playLog = String.format("play,P%d,%d,%s", currentPlayer, total(s.segment), canonical(nextCard));
-			logger.log(playLog);
+//			String playLog = String.format("play,P%d,%d,%s", currentPlayer, total(s.segment), canonical(nextCard));
+//			logger.log(playLog);
+			 loggerHelper.logPlay(s,s.lastPlayer,nextCard);
 			if (total(s.segment) == thirtyone) {
 				// lastPlayer gets 2 points for a 31
 				IPlayer player = players[s.lastPlayer];
 				player.setScore(player.getScore() + 2);
-				String logMessage = String.format("score,P%d,%d,%d,thirtyone",s.lastPlayer, player.getScore(), 2);
-				logger.log(logMessage);
+//				String logMessage = String.format("score,P%d,%d,%d,thirtyone",s.lastPlayer, player.getScore(), 2);
+//				logger.log(logMessage);
+
+				loggerHelper.logScore(s,player.getScore(),2, ScoreType.THIRTYONE);
 				s.newSegment = true;
 				currentPlayer = (currentPlayer+1) % 2;
 			} else {
 				if (total(s.segment) == fifteen) {
 					IPlayer player = players[s.lastPlayer];
 					player.setScore(player.getScore() + 2);
-					String logMessage = String.format("score,P%d,%d,%d,fifteen",s.lastPlayer, player.getScore(), 2);
-					logger.log(logMessage);
+//					String logMessage = String.format("score,P%d,%d,%d,fifteen",s.lastPlayer, player.getScore(), 2);
+//					logger.log(logMessage);
+					loggerHelper.logScore(s,player.getScore(),2,ScoreType.FIFTEEN);
 				}
 				// if total(segment) == 15, lastPlayer gets 2 points for a 15
 				if (!s.go) { // if it is "go" then same player gets another turn
@@ -329,8 +353,9 @@ private void play() {
 		if (players[0].emptyHand() && players[1].emptyHand()) {
 			IPlayer player = players[s.lastPlayer];
 			player.setScore(player.getScore() + 1);
-			String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
-			logger.log(logMessage);
+//			String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
+//			logger.log(logMessage);
+			 loggerHelper.logScore(s,player.getScore(),1,ScoreType.GO);
 		}
 
 		if (s.lastPlayer != -1 && nextCard != null) {
@@ -428,7 +453,9 @@ void showHandsCrib() {
 		  	InstantiationException, IllegalAccessException {
 	  /* Handle Properties */
 	  // System.out.println("Working Directory = " + System.getProperty("user.dir"));
-	  logger = Logger.getInstance();
+//	  logger = Logger.getInstance();
+
+	  loggerHelper = LoggerHelper.getInstance();
 
 	  Properties cribbageProperties = new Properties();
 	  // Default properties
@@ -466,14 +493,17 @@ void showHandsCrib() {
 	  players[1] = (IPlayer) clazz.getConstructor().newInstance();
 
 
-	  String seedLog = String.format("seed,%d", SEED);
-	  logger.log(seedLog);
+//	  String seedLog = String.format("seed,%d", SEED);
+//	  logger.log(seedLog);
+	  loggerHelper.logSeed(SEED);
 
-	  String player0Log = String.format("%s, P0", cribbageProperties.getProperty("Player0"));
-	  logger.log(player0Log);
-
-	  String player1Log = String.format("%s, P1", cribbageProperties.getProperty("Player1"));
-	  logger.log(player1Log);
+//	  String player0Log = String.format("%s, P0", cribbageProperties.getProperty("Player0"));
+//	  logger.log(player0Log);
+	  loggerHelper.logplayer(0, cribbageProperties.getProperty("Player0"));
+	  loggerHelper.logplayer(1, cribbageProperties.getProperty("Player1"));
+//
+//	  String player1Log = String.format("%s, P1", cribbageProperties.getProperty("Player1"));
+//	  logger.log(player1Log);
 
 
 

@@ -43,8 +43,14 @@ public class ShowFlushStrategy extends ScoringStrategy{
 
 
         if (score != 0) {
-            String log = String.format("score,P%d,%d,%d,flush%d,%s",tempSegment.lastPlayer, currentPlayer.getScore(),score, score, Cribbage.canonical(tempSegment.segment));
-            logger.log(log);
+//            String log = String.format("score,P%d,%d,%d,flush%d,%s",tempSegment.lastPlayer, currentPlayer.getScore(),score, score, Cribbage.canonical(tempSegment.segment));
+//            logger.log(log);
+            if (score == 4) {
+                loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.FLUSH4, Cribbage.canonical(tempSegment.segment));
+            } else {
+                loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.FLUSH5, Cribbage.canonical(tempSegment.segment));
+            }
+
         }
         return score;
 

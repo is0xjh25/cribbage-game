@@ -12,16 +12,18 @@ public class ShowRunStrategy extends ScoringStrategy{
         int tot_score = 0;
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         Hand[] runs;
-
+        int score = 0;
         runs = tempSegment.segment.extractSequences(5);
         if (runs.length > 0) {
             for (Hand run : runs) {
                 if (checkRun(run) != true) {
                     currentPlayer.setScore(currentPlayer.getScore() + 5);
                     tot_score += 5;
+                    score = 5;
                     //score,P1,10,3,run3,[JS,QC,KC]
-                    String log = String.format("score,P%d,%d,%d,run5,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 5, Cribbage.canonical(run));
-                    logger.log(log);
+//                    String log = String.format("score,P%d,%d,%d,run5,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 5, Cribbage.canonical(run));
+//                    logger.log(log);
+                    loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN5, Cribbage.canonical(run));
                 }
             }
             return tot_score;
@@ -33,8 +35,10 @@ public class ShowRunStrategy extends ScoringStrategy{
                 if (checkRun(run) != true) {
                     currentPlayer.setScore(currentPlayer.getScore() + 4);
                     tot_score += 5;
-                    String log = String.format("score,P%d,%d,%d,run4,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 4, Cribbage.canonical(run));
-                    logger.log(log);
+                    score = 5;
+//                    String log = String.format("score,P%d,%d,%d,run4,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 4, Cribbage.canonical(run));
+//                    logger.log(log);
+                    loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN4, Cribbage.canonical(run));
                 }
             }
             return tot_score;
@@ -46,9 +50,11 @@ public class ShowRunStrategy extends ScoringStrategy{
                 if (checkRun(run) != true) {
                     currentPlayer.setScore(currentPlayer.getScore() + 3);
                     tot_score += 3;
+                    score = 3;
                     //score,P1,10,3,run3,[JS,QC,KC]
-                    String log = String.format("score,P%d,%d,%d,run3,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 3, Cribbage.canonical(run));
-                    logger.log(log);
+//                    String log = String.format("score,P%d,%d,%d,run3,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 3, Cribbage.canonical(run));
+//                    logger.log(log);
+                    loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN3, Cribbage.canonical(run));
                 }
             }
             return tot_score;
