@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+/* SWEN-30006-Project2
+    Created by Workshop16Team02, May 28th 2021
+*/
 public class ScoringStrategyFactory {
     private static final ScoringStrategyFactory scoringStrategyFactory = new ScoringStrategyFactory();
 

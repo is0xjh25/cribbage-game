@@ -3,7 +3,4 @@
 	<output-test url="file://$MODULE_DIR$/out/test/Cribbage"/>
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
-	<levels>
-		<level name="JGameGrid" value="project"/>
-	</levels>
 </component>

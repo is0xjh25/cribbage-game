@@ -7,6 +7,9 @@ import java.nio.file.*;
 // Reference for File Class
 // https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#write(java.nio.file.Path,%20java.lang.Iterable,%20java.nio.charset.Charset,%20java.nio.file.OpenOption...)
 
+/* SWEN-30006-Project2
+    Created by Workshop16Team02, May 28th 2021
+*/
 public class Logger {
 
     private static final Logger logger = new Logger();

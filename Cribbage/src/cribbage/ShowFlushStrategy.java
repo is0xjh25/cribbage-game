@@ -5,6 +5,9 @@ import ch.aplu.jcardgame.Hand;
 
 import java.util.ArrayList;
 
+/* SWEN-30006-Project2
+    Created by Workshop16Team02, May 28th 2021
+*/
 public class ShowFlushStrategy extends ScoringStrategy{
     @Override
     public int getScore() {

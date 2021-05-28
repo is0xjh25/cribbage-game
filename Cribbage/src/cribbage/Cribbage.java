@@ -291,6 +291,9 @@ class Segment {
 		}
 }
 
+/* SWEN-30006-Project2
+    Edited by Workshop16Team02, May 28th 2021
+*/
 private void play() {
 	final int thirtyone = 31;
 	final int fifteen = 15;
@@ -360,6 +363,9 @@ private void play() {
 	}
 }
 
+/* SWEN-30006-Project2
+	Edited by Workshop16Team02, May 28th 2021
+*/
 void showHandsCrib() {
 	ScoringStrategy scoringStrategy = ScoringStrategyFactory.getInstance().getScoringStrategy(StrategyType.SHOW);
 

@@ -3,6 +3,9 @@ package cribbage;
 import java.util.ArrayList;
 import java.util.List;
 
+/* SWEN-30006-Project2
+    Created by Workshop16Team02, May 28th 2021
+*/
 public abstract class CompositeStrategy extends ScoringStrategy {
     protected List<ScoringStrategy> strategyList = new ArrayList<>();
 
