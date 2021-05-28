@@ -14,7 +14,6 @@ public class Logger {
     private final Path filePath = Path.of("cribbage.log");
 
     private Logger() {
-
         try {
             Files.deleteIfExists(filePath);
         } catch (IOException e) {
@@ -27,7 +26,7 @@ public class Logger {
         return logger;
     }
 
-
+    // Logger the message output
     public void log(String string) {
         string = string + "\n";
         byte[] logByte = string.getBytes();

@@ -5,7 +5,6 @@ import ch.aplu.jcardgame.Hand;
 
 public class ShowRunStrategy extends ScoringStrategy{
 
-
     @Override
     public int getScore() {
 
@@ -13,6 +12,8 @@ public class ShowRunStrategy extends ScoringStrategy{
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         Hand[] runs;
         int score = 0;
+
+        // figure run5
         runs = tempSegment.segment.extractSequences(5);
         if (runs.length > 0) {
             for (Hand run : runs) {
@@ -20,9 +21,6 @@ public class ShowRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 5);
                     tot_score += 5;
                     score = 5;
-                    //score,P1,10,3,run3,[JS,QC,KC]
-//                    String log = String.format("score,P%d,%d,%d,run5,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 5, Cribbage.canonical(run));
-//                    logger.log(log);
                     loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN5, Cribbage.canonical(run));
                     return tot_score;
                 } else {
@@ -45,6 +43,7 @@ public class ShowRunStrategy extends ScoringStrategy{
 
         }
 
+        // find run4
         runs = tempSegment.segment.extractSequences(4);
         if (runs.length > 0) {
             for (Hand run : runs) {
@@ -53,8 +52,6 @@ public class ShowRunStrategy extends ScoringStrategy{
                     currentPlayer.setScore(currentPlayer.getScore() + 4);
                     tot_score += 5;
                     score = 5;
-//                    String log = String.format("score,P%d,%d,%d,run4,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 4, Cribbage.canonical(run));
-//                    logger.log(log);
                     loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN4, Cribbage.canonical(run));
                     // return tot_score;
                 } else {
@@ -77,36 +74,24 @@ public class ShowRunStrategy extends ScoringStrategy{
             return tot_score;
         }
 
-        System.out.println(Cribbage.canonical(tempSegment.segment));
+        // find run3
         runs = tempSegment.segment.extractSequences(3);
-        System.out.println(runs.length);
         if (runs.length > 0) {
             for (Hand run : runs) {
-                System.out.println(Cribbage.canonical(run));
                 if (checkRun(run) != true) {
                     currentPlayer.setScore(currentPlayer.getScore() + 3);
                     tot_score += 3;
                     score = 3;
-                    //score,P1,10,3,run3,[JS,QC,KC]
-//                    String log = String.format("score,P%d,%d,%d,run3,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 3, Cribbage.canonical(run));
-//                    logger.log(log);
                     loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN3, Cribbage.canonical(run));
-                    // return tot_score;
                 }
             }
             return tot_score;
         }
-
         return tot_score;
     }
 
 
-
-
-
-
-
-
+    // check if a valid run
     private boolean checkRun(Hand run) {
         boolean K = false;
         boolean A = false;

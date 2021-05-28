@@ -13,6 +13,7 @@ public class PlayPairStrategy extends ScoringStrategy{
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         Cribbage.ScoreType scoreType = null;
 
+        // Start to find pair for pair4
         while (tempSegment.segment.getNumberOfCards() > 1) {
             if (tempSegment.segment.getNumberOfCards() == 4) {
                 Hand[] quads = tempSegment.segment.extractQuads();
@@ -35,7 +36,6 @@ public class PlayPairStrategy extends ScoringStrategy{
             } else if (tempSegment.segment.getNumberOfCards() == 2) {
                 Hand[] pair = tempSegment.segment.extractPairs();
                 if (pair.length > 0) {
-                    System.out.println("zz22");
                     currentPlayer.setScore(currentPlayer.getScore() + 2);
                     score += 2;
                     flag = 2;
@@ -47,9 +47,6 @@ public class PlayPairStrategy extends ScoringStrategy{
         }
 
         if (flag != -1 && scoreType != null) {
-            // String pairLog = String.format("score,P%d,%d,%d,pair%d",tempSegment.lastPlayer, currentPlayer.getScore(), score, flag);
-            //String logMes = getLogMessage(xxxxxxxxxx)
-//            logger.log(pairLog);
             loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, scoreType);
         }
 

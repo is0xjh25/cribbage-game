@@ -12,17 +12,15 @@ public class ShowJackStrategy extends ScoringStrategy {
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         ArrayList<Card> cardList = tempSegment.segment.getCardList();
 
+        // Find if there is jack score
         for (int i = 0; i < cardList.size() - 1; i++) {
             Cribbage.Rank rank = (Cribbage.Rank) cardList.get(i).getRank();
             if (rank.order == 11 && cardList.get(i).getSuitId() == cardList.get(cardList.size() - 1).getSuitId()) {
                 currentPlayer.setScore(currentPlayer.getScore() + 1);
                 score = 1;
-//                String log = String.format("score,P%d,%d,%d,jack,[%s]", segmentScoring.lastPlayer, currentPlayer.getScore(), 1, Cribbage.canonical(cardList.get(i)));
-//                logger.log(log);
-                String cardLog = String.format("[%s]", Cribbage.canonical(cardList.get(i)));
-                loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.JACK, cardLog);
-
-                // ServiceFactory.getLoggerHelper()
+                Hand handTemp = new Hand(Cribbage.deck);
+                handTemp.insert(cardList.get(i).getCardNumber(),false);
+                loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.JACK, Cribbage.canonical(handTemp));
                 score = 1;
                 break;
             }
@@ -30,6 +28,3 @@ public class ShowJackStrategy extends ScoringStrategy {
         return score;
     }
 }
-//ServiceFactory:
-//private Lo str;
-//private LoggerHelper log;

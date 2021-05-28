@@ -14,10 +14,9 @@ public class ShowFlushStrategy extends ScoringStrategy{
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         ArrayList<Card> cardList = tempSegment.segment.getCardList();
 
-        // extract the suit of the first card
+        // Find flush4
         Card starterCard = tempSegment.segment.getLast();
         tempSegment.segment.remove(starterCard, false);
-
         Cribbage.Suit flushSuit = null;
         for (Cribbage.Suit suit : Cribbage.Suit.values()) {
             int amount = tempSegment.segment.getNumberOfCardsWithSuit(suit);
@@ -30,6 +29,7 @@ public class ShowFlushStrategy extends ScoringStrategy{
 
         }
 
+        // Find flush5
         if (score == 4) {
             tempSegment.segment.insert(starterCard, false);
             int flushIncludingStarter = tempSegment.segment.getNumberOfCardsWithSuit(flushSuit);
@@ -41,10 +41,7 @@ public class ShowFlushStrategy extends ScoringStrategy{
             }
         }
 
-
         if (score != 0) {
-//            String log = String.format("score,P%d,%d,%d,flush%d,%s",tempSegment.lastPlayer, currentPlayer.getScore(),score, score, Cribbage.canonical(tempSegment.segment));
-//            logger.log(log);
             if (score == 4) {
                 loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.FLUSH4, Cribbage.canonical(tempSegment.segment));
             } else {

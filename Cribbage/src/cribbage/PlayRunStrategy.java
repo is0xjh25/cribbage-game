@@ -13,6 +13,8 @@ public class PlayRunStrategy extends ScoringStrategy{
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
         int runNum = -1;
         Cribbage.ScoreType scoreType = null;
+
+        // Start to find Run start from run7
         while (tempSegment.segment.getNumberOfCards() > 2) {
             if (tempSegment.segment.getNumberOfCards() == 7) {
                 Hand[] temp = tempSegment.segment.extractSequences(7);
@@ -64,9 +66,6 @@ public class PlayRunStrategy extends ScoringStrategy{
         }
 
         if (runNum != -1 && scoreType != null) {
-//            String pairLog = String.format("score,P%d,%d,%d,run%d",tempSegment.lastPlayer, currentPlayer.getScore(), score, runNum);
-//            logger.log(pairLog);
-
             loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, scoreType);
         }
 

@@ -13,15 +13,11 @@ public class PlayTotalAndLastStrategy extends ScoringStrategy{
             score = 2;
             totalScore += 2;
             loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.THIRTYONE);
-//            logMessage = String.format("score,P%d,%d,%d,thirtyone",tempSegment.lastPlayer, currentPlayer.getScore(), score);
-//            logger.log(logMessage);
         } else if (Cribbage.total(tempSegment.segment) == 15) {
             currentPlayer.setScore(currentPlayer.getScore() + 2);
             score = 2;
             totalScore += 2;
             loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.FIFTEEN);
-//            logMessage = String.format("score,P%d,%d,%d,fifteen",tempSegment.lastPlayer, currentPlayer.getScore(), score);
-//            logger.log(logMessage);
         }
 
         if (tempSegment.go == true && tempSegment.nonCard == true) {
@@ -29,8 +25,6 @@ public class PlayTotalAndLastStrategy extends ScoringStrategy{
             score = 1;
             totalScore += 1;
             loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.GO);
-//            logMessage = String.format("score,P%d,%d,%d,go",tempSegment.lastPlayer, currentPlayer.getScore(), score);
-//            logger.log(logMessage);
         }
         return score;
     }

@@ -18,6 +18,7 @@ public class ScoringStrategyFactory {
         return scoringStrategyFactory;
     }
 
+    // Get the composite strategy as required
     public ScoringStrategy getScoringStrategy(Cribbage.StrategyType type) {
         CompositeStrategy compositeStrategy = null;
         switch (type) {
