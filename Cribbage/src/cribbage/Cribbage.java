@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 public class Cribbage extends CardGame {
 	static Cribbage cribbage;  // Provide access to singleton
 
-//	static Logger logger;
 
 	static LoggerHelper loggerHelper;
 
@@ -311,7 +310,6 @@ private void play() {
 //				String logMessage = String.format("score,P%d,%d,%d,go",s.lastPlayer, player.getScore(), 1);
 //				logger.log(logMessage);
 				loggerHelper.logScore(s,player.getScore(),1,ScoreType.GO);
-
 				s.nonCard = true;
 				s.newSegment = true;
 			} else {
@@ -331,7 +329,6 @@ private void play() {
 				player.setScore(player.getScore() + 2);
 //				String logMessage = String.format("score,P%d,%d,%d,thirtyone",s.lastPlayer, player.getScore(), 2);
 //				logger.log(logMessage);
-
 				loggerHelper.logScore(s,player.getScore(),2, ScoreType.THIRTYONE);
 				s.newSegment = true;
 				currentPlayer = (currentPlayer+1) % 2;

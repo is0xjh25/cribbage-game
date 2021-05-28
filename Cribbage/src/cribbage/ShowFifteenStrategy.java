@@ -9,6 +9,7 @@ public class ShowFifteenStrategy extends ScoringStrategy{
     @Override
     public int getScore() {
         int score = 0;
+        int totalScore = 0;
 
         // copy a temporary segment to avoid risky direct modification to the original segment
         Cribbage.Segment tempSegment = segmentScoring.copySegment();
@@ -26,7 +27,8 @@ public class ShowFifteenStrategy extends ScoringStrategy{
             int sum = calculateSum(hand);
             if (sum == 15) {
                 // score,P0,2,2,fifteen,[7C,8H]
-                score+=2;
+                totalScore+=2;
+                score = 2;
                 currentPlayer.setScore(currentPlayer.getScore()+2);
 //                String log = String.format("score,p%d,%d,%d,fifteen,%s",segmentScoring.lastPlayer,currentPlayer.getScore(),2,Cribbage.canonical(hand));
 //

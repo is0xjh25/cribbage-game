@@ -10,6 +10,7 @@ public class ShowPairStrategy extends ScoringStrategy {
     @Override
     public int getScore() {
         int score = 0;
+        int totalScore = 0;
         int flag = -1;
 
         // copy a temporary segment to avoid risky direct modification to the original segment
@@ -23,7 +24,8 @@ public class ShowPairStrategy extends ScoringStrategy {
         if (quad.length > 0) {
             // add to score
             currentPlayer.setScore(currentPlayer.getScore() + 12);
-            score += 12;
+            totalScore += 12;
+            score = 12;
             flag = 4;
 
             // print to log
@@ -40,7 +42,8 @@ public class ShowPairStrategy extends ScoringStrategy {
         if (trip.length > 0) {
             // add to score
             currentPlayer.setScore(currentPlayer.getScore() + 6);
-            score += 6;
+            totalScore += 6;
+            score = 6;
             flag = 3;
 
             // print to log
@@ -85,7 +88,8 @@ public class ShowPairStrategy extends ScoringStrategy {
             for (i = 0; i < pair.length; i++) {
                 // add to score
                 currentPlayer.setScore(currentPlayer.getScore() + 2);
-                score += 2;
+                totalScore += 2;
+                score = 2;
                 flag = 2;
 
                 // print to log

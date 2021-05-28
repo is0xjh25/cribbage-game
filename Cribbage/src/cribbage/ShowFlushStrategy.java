@@ -54,26 +54,5 @@ public class ShowFlushStrategy extends ScoringStrategy{
         }
         return score;
 
-//        // check whether flush exists
-//        int flush = tempSegment.segment.getNumberOfCardsWithSuit(suit);
-//
-//        if (flush == 4) {
-//            currentPlayer.setScore(currentPlayer.getScore() + 4);
-//            score += 4;
-//        }
-//
-//        // if flush exists, check whether flush5 exists
-//        Enum starterSuit = cardList.get(-1).getSuit();
-//        if (score == 4 && suit == starterSuit) {
-//            currentPlayer.setScore(currentPlayer.getScore() + 1);
-//            score += 1;
-//        }
-//
-//        // print log
-//        if (score != 0) {
-//            // no reference, follow score,P1,15,1,jack,[JC]
-//            String log =
-//                    String.format("score,P%d,%d,%d,flush%d,", segmentScoring.lastPlayer, currentPlayer.getScore(), score, score, cardList.toString());
-//        }
     }
 }

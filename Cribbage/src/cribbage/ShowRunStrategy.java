@@ -24,14 +24,31 @@ public class ShowRunStrategy extends ScoringStrategy{
 //                    String log = String.format("score,P%d,%d,%d,run5,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 5, Cribbage.canonical(run));
 //                    logger.log(log);
                     loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN5, Cribbage.canonical(run));
+                    return tot_score;
+                } else {
+                    Hand runCopy = new Hand(Cribbage.deck);
+                    for (Card card: run.getCardList()) {
+                        Cribbage.Rank rank = (Cribbage.Rank) card.getRank();
+                        if (rank.order != 1){
+                            runCopy.insert(card.getCardNumber(),false);
+                        }
+                    }
+                    Hand[] run4 = runCopy.extractSequences(4);
+                    if (run4.length > 0) {
+                        currentPlayer.setScore(currentPlayer.getScore() + 4);
+                        tot_score += 4;
+                        score = 4;
+                        loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN3, Cribbage.canonical(run4[0]));
+                    }
                 }
             }
-            return tot_score;
+
         }
 
         runs = tempSegment.segment.extractSequences(4);
         if (runs.length > 0) {
             for (Hand run : runs) {
+
                 if (checkRun(run) != true) {
                     currentPlayer.setScore(currentPlayer.getScore() + 4);
                     tot_score += 5;
@@ -39,14 +56,33 @@ public class ShowRunStrategy extends ScoringStrategy{
 //                    String log = String.format("score,P%d,%d,%d,run4,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 4, Cribbage.canonical(run));
 //                    logger.log(log);
                     loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN4, Cribbage.canonical(run));
+                    // return tot_score;
+                } else {
+                    Hand runCopy = new Hand(Cribbage.deck);
+                    for (Card card: run.getCardList()) {
+                        Cribbage.Rank rank = (Cribbage.Rank) card.getRank();
+                        if (rank.order != 1){
+                            runCopy.insert(card.getCardNumber(),false);
+                        }
+                    }
+                    Hand[] run3 = runCopy.extractSequences(3);
+                    if (run3.length > 0) {
+                        currentPlayer.setScore(currentPlayer.getScore() + 3);
+                        tot_score += 3;
+                        score = 3;
+                        loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN3, Cribbage.canonical(run3[0]));
+                    }
                 }
             }
             return tot_score;
         }
 
+        System.out.println(Cribbage.canonical(tempSegment.segment));
         runs = tempSegment.segment.extractSequences(3);
+        System.out.println(runs.length);
         if (runs.length > 0) {
             for (Hand run : runs) {
+                System.out.println(Cribbage.canonical(run));
                 if (checkRun(run) != true) {
                     currentPlayer.setScore(currentPlayer.getScore() + 3);
                     tot_score += 3;
@@ -55,6 +91,7 @@ public class ShowRunStrategy extends ScoringStrategy{
 //                    String log = String.format("score,P%d,%d,%d,run3,%s", segmentScoring.lastPlayer, currentPlayer.getScore(), 3, Cribbage.canonical(run));
 //                    logger.log(log);
                     loggerHelper.logScore(tempSegment, currentPlayer.getScore(), score, Cribbage.ScoreType.RUN3, Cribbage.canonical(run));
+                    // return tot_score;
                 }
             }
             return tot_score;
@@ -62,6 +99,13 @@ public class ShowRunStrategy extends ScoringStrategy{
 
         return tot_score;
     }
+
+
+
+
+
+
+
 
     private boolean checkRun(Hand run) {
         boolean K = false;

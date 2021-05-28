@@ -11,7 +11,7 @@ public class LoggerHelper {
     private LoggerHelper() {
 
     }
-    
+
 
     public static LoggerHelper getInstance() {
         return loggerHelper;
@@ -29,14 +29,13 @@ public class LoggerHelper {
     }
 
 
-
     public void logDiscard(Hand hand, int currentPlayer) {
-        String logMessage = String.format("discard,p%d,%s", currentPlayer, Cribbage.canonical(hand));
+        String logMessage = String.format("discard,P%d,%s", currentPlayer, Cribbage.canonical(hand));
         logger.log(logMessage);
     }
 
     public void logDeal(Hand hand, int currentPlayer) {
-        String logMessage = String.format("deal,p%d,%s", currentPlayer, Cribbage.canonical(hand));
+        String logMessage = String.format("deal,P%d,%s", currentPlayer, Cribbage.canonical(hand));
         logger.log(logMessage);
     }
 
@@ -47,7 +46,7 @@ public class LoggerHelper {
     }
 
     public void logplayer(int playerId, String playerType) {
-        String logMessage = String.format("%s, P%d", playerType, playerId);
+        String logMessage = String.format("%s,P%d", playerType, playerId);
         logger.log(logMessage);
     }
 
@@ -59,12 +58,12 @@ public class LoggerHelper {
 
 
     public void logShow(Cribbage.Segment tempSegment, Card starterCard) {
-        String logMessage = String.format("show,p%d,%s+%s",tempSegment.lastPlayer,Cribbage.canonical(starterCard),Cribbage.canonical(tempSegment.segment));
+        String logMessage = String.format("show,P%d,%s+%s",tempSegment.lastPlayer,Cribbage.canonical(starterCard),Cribbage.canonical(tempSegment.segment));
         logger.log(logMessage);
     }
 
     public void loggerStarter(Card card) {
-        String logMessage = String.format("Starter,%s", Cribbage.canonical(card));
+        String logMessage = String.format("starter,%s", Cribbage.canonical(card));
         logger.log(logMessage);
     }
 
